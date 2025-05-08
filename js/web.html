@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop Thời Trang Trẻ Em</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fafafa;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f8f8;
+            padding: 10px 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        .banner img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .products {
+            padding: 20px;
+            background: #fff;
+        }
+        
+        .product-list {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .product {
+            width: 220px;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        
+        .product h3 {
+            font-size: 14px;
+            margin: 10px 0 5px;
+            text-align: center;
+            color: #333;
+            min-height: 40px;
+        }
+        
+        .product p {
+            font-weight: bold;
+            color: #e53935;
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+        
+        .product button {
+            padding: 6px 12px;
+            border: none;
+            background: #e53935;
+            color: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .product button:hover {
+            background: #d32f2f;
+        }
+        
+        footer {
+            background: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+        }
+        /* ===== Dropdown Actions ===== */
+        
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+        
+        .dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .dropdown .icon {
+            font-size: 22px;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 30px;
+            right: 0;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            min-width: 100px;
+            z-index: 99;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dropdown-content a {
+            display: block;
+            color: white;
+            padding: 6px 0;
+            text-decoration: none;
+        }
+        
+        .dropdown-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .cart {
+            position: relative;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        
+        .cart .badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: red;
+            color: white;
+            font-size: 12px;
+            border-radius: 50%;
+            padding: 2px 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Thời Trang Trẻ Em</div>
+        <nav>
+            <a onclick="showProducts('default')">Trang chủ</a>
+            <a onclick="showProducts('girl')">Bé gái</a>
+            <a onclick="showProducts('boy')">Bé trai</a>
+        </nav>
+        <div class="actions">
+            <div class="dropdown">
+                <span class="icon">👤</span>
+                <div class="dropdown-content">
+                    <a href="login.html">Đăng nhập</a>
+                    <a href="register.html">Đăng ký</a>
+                </div>
+            </div>
+            <div class="cart" onclick="window.location.href='cart.html'">
+                🛒<span class="badge" id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="banner">
+        <img src="../img/banner.jpg" alt="Banner chính">
+    </section>
+
+    <section class="products">
+        <h2 id="section-title">Sản phẩm nổi bật</h2>
+        <div class="product-list" id="product-list"></div>
+    </section>
+
+    <footer>
+        <p>© 2025 Thời trang trẻ em</p>
+    </footer>
+
+    <script>
+        const defaultProducts = [{
+            name: "Áo bé gái",
+            price: "199,000₫",
+            image: "../img/product1.jpg"
+        }, {
+            name: "Quần bé trai",
+            price: "179,000₫",
+            image: "../img/product2.jpg"
+        }, {
+            name: "Đầm công chúa",
+            price: "249,000₫",
+            image: "../img/product3.jpg"
+        }, {
+            name: "Váy sát nách Minnie",
+            price: "189,000₫",
+            image: "../img/girl1.jpg"
+        }, {
+            name: "Đầm xòe Elsa",
+            price: "219,000₫",
+            image: "../img/girl2.jpg"
+        }, {
+            name: "Áo thun siêu nhân",
+            price: "159,000₫",
+            image: "../img/boy1.jpg"
+        }, {
+            name: "Quần short kaki",
+            price: "139,000₫",
+            image: "../img/boy2.jpg"
+        }];
+
+        const productData = {
+            girl: defaultProducts.filter(p => p.name.includes("bé gái") || p.name.includes("Đầm") || p.name.includes("Váy")),
+            boy: defaultProducts.filter(p => p.name.includes("bé trai") || p.name.includes("siêu nhân") || p.name.includes("kaki"))
+        };
+
+        function renderProducts(products) {
+            const container = document.getElementById('product-list');
+            container.innerHTML = '';
+            products.forEach(product => {
+                const div = document.createElement('div');
+                div.className = 'product';
+                div.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.price}</p>
+          <button onclick='addToCart(${JSON.stringify(product)})'>Mua ngay</button>
+        `;
+                container.appendChild(div);
+            });
+        }
+
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            alert('Đã thêm sản phẩm vào giỏ hàng!');
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+
+        function showProducts(type) {
+            const title = document.getElementById('section-title');
+            if (type === 'girl') {
+                title.textContent = "Thời Trang Bé Gái";
+                renderProducts(productData.girl);
+            } else if (type === 'boy') {
+                title.textContent = "Thời Trang Bé Trai";
+                renderProducts(productData.boy);
+            } else {
+                title.textContent = "Sản phẩm nổi bật";
+                renderProducts(defaultProducts);
+            }
+        }
+
+        window.onload = () => {
+            showProducts('default');
+            updateCartCount();
+        };
+    </script>
+
+</body>
+
+</html>

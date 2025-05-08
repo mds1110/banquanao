@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        .login-container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .login-container p {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .login-container p a {
+            color: #333;
+            text-decoration: underline;
+        }
+        
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        
+        .forgot {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .forgot a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #333;
+        }
+        
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>ĐĂNG NHẬP TÀI KHOẢN</h2>
+        <p>Bạn chưa có tài khoản? <a href="register.html">Đăng ký tại đây</a></p>
+
+        <div class="error" id="error-msg"></div>
+
+        <label for="email">Email *</label>
+        <input type="email" id="email" placeholder="Email" required>
+
+        <label for="password">Mật khẩu *</label>
+        <input type="password" id="password" placeholder="Mật khẩu" required>
+
+        <div class="forgot">Quên mật khẩu? Nhấn vào <a href="#">đây</a></div>
+
+        <button class="btn" onclick="handleLogin()">Đăng nhập</button>
+    </div>
+
+    <script>
+        function handleLogin() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorMsg = document.getElementById("error-msg");
+
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                window.location.href = "index.html"; // chuyển đến trang chủ
+            } else {
+                errorMsg.textContent = "Email hoặc mật khẩu không đúng!";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
